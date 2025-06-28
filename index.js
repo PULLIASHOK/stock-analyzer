@@ -117,30 +117,7 @@ const priceUpdateJob = schedule.scheduleJob('*/5 * * * *', updateStockPrices);
 
 // API Endpoints
 
-/**
- * @swagger
- * /stocks/register:
- *   post:
- *     summary: Register a new stock
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               symbol:
- *                 type: string
- *               name:
- *                 type: string
- *               current_price:
- *                 type: number
- *               available_quantity:
- *                 type: integer
- *     responses:
- *       200:
- *         description: The created stock
- */
+
 app.post('/stocks/register', (req, res) => {
     const { symbol, name, current_price, available_quantity } = req.body;
     
@@ -167,21 +144,7 @@ app.post('/stocks/register', (req, res) => {
     }
 });
 
-/**
- * @swagger
- * /stocks/history/{stock_id}:
- *   get:
- *     summary: Get price history for a stock
- *     parameters:
- *       - in: path
- *         name: stock_id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: List of price history records
- */
+
 app.get('/stocks/history/:stock_id', (req, res) => {
     const { stock_id } = req.params;
     const limit = req.query.limit || 100;
@@ -193,24 +156,7 @@ app.get('/stocks/history/:stock_id', (req, res) => {
     res.json(history);
 });
 
-/**
- * @swagger
- * /users/create:
- *   post:
- *     summary: Create a new user
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *     responses:
- *       200:
- *         description: The created user
- */
+
 app.post('/users/create', (req, res) => {
     const { username } = req.body;
     
@@ -231,26 +177,7 @@ app.post('/users/create', (req, res) => {
     }
 });
 
-/**
- * @swagger
- * /users/loan:
- *   post:
- *     summary: Take a loan
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               user_id:
- *                 type: integer
- *               amount:
- *                 type: number
- *     responses:
- *       200:
- *         description: Updated user information
- */
+
 app.post('/users/loan', (req, res) => {
     const { user_id, amount } = req.body;
     
@@ -282,28 +209,7 @@ app.post('/users/loan', (req, res) => {
     res.json(updatedUser);
 });
 
-/**
- * @swagger
- * /users/buy:
- *   post:
- *     summary: Buy stocks
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               user_id:
- *                 type: integer
- *               stock_id:
- *                 type: integer
- *               quantity:
- *                 type: integer
- *     responses:
- *       200:
- *         description: The transaction record
- */
+
 app.post('/users/buy', (req, res) => {
     const { user_id, stock_id, quantity } = req.body;
     
@@ -379,28 +285,7 @@ app.post('/users/buy', (req, res) => {
     }
 });
 
-/**
- * @swagger
- * /users/sell:
- *   post:
- *     summary: Sell stocks
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               user_id:
- *                 type: integer
- *               stock_id:
- *                 type: integer
- *               quantity:
- *                 type: integer
- *     responses:
- *       200:
- *         description: The transaction record
- */
+
 app.post('/users/sell', (req, res) => {
     const { user_id, stock_id, quantity } = req.body;
     
@@ -471,21 +356,7 @@ app.post('/users/sell', (req, res) => {
     }
 });
 
-/**
- * @swagger
- * /users/report/{user_id}:
- *   get:
- *     summary: Get user profit/loss report
- *     parameters:
- *       - in: path
- *         name: user_id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: User report
- */
+
 app.get('/users/report/:user_id', (req, res) => {
     const { user_id } = req.params;
     
@@ -583,20 +454,7 @@ app.get('/stocks/report', (req, res) => {
     res.json(reports);
 });
 
-/**
- * @swagger
- * /users/top:
- *   get:
- *     summary: Get top performing users
- *     parameters:
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: List of top users
- */
+
 app.get('/users/top', (req, res) => {
     const limit = req.query.limit || 5;
     
@@ -650,20 +508,7 @@ app.get('/users/top', (req, res) => {
     res.json(reports.slice(0, limit));
 });
 
-/**
- * @swagger
- * /stocks/top:
- *   get:
- *     summary: Get top performing stocks
- *     parameters:
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: List of top stocks
- */
+
 app.get('/stocks/top', (req, res) => {
     const limit = req.query.limit || 5;
     
@@ -695,24 +540,7 @@ app.get('/stocks/top', (req, res) => {
     res.json(reports.slice(0, limit));
 });
 
-/**
- * @swagger
- * /simulate/trading:
- *   get:
- *     summary: Simulate users trading
- *     parameters:
- *       - in: query
- *         name: num_users
- *         schema:
- *           type: integer
- *       - in: query
- *         name: num_trades
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Simulation started message
- */
+
 app.get('/simulate/trading', (req, res) => {
     const numUsers = parseInt(req.query.num_users) || 5;
     const numTrades = parseInt(req.query.num_trades) || 10;
